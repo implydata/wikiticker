@@ -41,10 +41,7 @@ libraryDependencies ++= Seq(
 
 libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-core" % "1.1.2",
-  "ch.qos.logback" % "logback-classic" % "1.1.2",
-  "org.apache.logging.log4j" % "log4j-to-slf4j" % "2.1" % "test",
-  "org.slf4j" % "log4j-over-slf4j" % "1.7.6" % "test",
-  "org.slf4j" % "jul-to-slf4j" % "1.7.6" % "test"
+  "ch.qos.logback" % "logback-classic" % "1.1.2"
 )
 
 //
