@@ -57,6 +57,8 @@ case class Message(
     "diffUrl" -> diffUrl,
     "user" -> user,
     "delta" -> delta,
+    "added" -> added,
+    "deleted" -> deleted,
     "comment" -> comment,
     "isRobot" -> isRobot,
     "isMinor" -> isMinor,
