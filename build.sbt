@@ -41,6 +41,8 @@ pomExtra := <scm>
 
 releaseSettings
 
+publishArtifact in Test := false
+
 ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 
 libraryDependencies ++= Seq(
