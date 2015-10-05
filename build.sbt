@@ -34,10 +34,18 @@ publishTo := Some("releases" at "https://oss.sonatype.org/service/local/staging/
 
 pomIncludeRepository := { _ => false }
 
-pomExtra := <scm>
-  <url>https://github.com/implydata/wikiticker.git</url>
-  <connection>scm:git:git@github.com:implydata/wikiticker.git</connection>
-</scm>
+pomExtra := (
+  <scm>
+    <url>https://github.com/implydata/wikiticker.git</url>
+    <connection>scm:git:git@github.com:implydata/wikiticker.git</connection>
+  </scm>
+    <developers>
+      <developer>
+        <name>Gian Merlino</name>
+        <organization>Imply Data Inc.</organization>
+        <organizationUrl>http://imply.io/</organizationUrl>
+      </developer>
+    </developers>)
 
 releaseSettings
 
