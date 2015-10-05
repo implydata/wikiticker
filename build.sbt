@@ -28,7 +28,20 @@ licenses := Seq("Apache License, Version 2.0" -> url("http://www.apache.org/lice
 
 homepage := Some(url("https://github.com/implydata/wikiticker"))
 
+publishMavenStyle := true
+
+publishTo := Some("releases" at "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+
+pomIncludeRepository := { _ => false }
+
+pomExtra := <scm>
+  <url>https://github.com/implydata/wikiticker.git</url>
+  <connection>scm:git:git@github.com:implydata/wikiticker.git</connection>
+</scm>
+
 releaseSettings
+
+ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 
 libraryDependencies ++= Seq(
   "com.metamx" %% "scala-util" % "1.11.3" exclude("log4j", "log4j") force(),
