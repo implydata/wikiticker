@@ -49,20 +49,13 @@ libraryDependencies ++= Seq(
 )
 
 //
-// Logging
-//
-
-libraryDependencies ++= Seq(
-  "ch.qos.logback" % "logback-core" % "1.1.2",
-  "ch.qos.logback" % "logback-classic" % "1.1.2"
-)
-
-//
 // Test stuff
 //
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.5" % "test",
   "junit" % "junit" % "4.11" % "test",
-  "com.novocode" % "junit-interface" % "0.11-RC1" % "test"
+  "com.novocode" % "junit-interface" % "0.11-RC1" % "test",
+  "ch.qos.logback" % "logback-core" % "1.1.2" % "test",
+  "ch.qos.logback" % "logback-classic" % "1.1.2" % "test"
 )
