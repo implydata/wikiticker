@@ -55,8 +55,13 @@ ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 
 libraryDependencies ++= Seq(
   "com.metamx" %% "scala-util" % "1.11.3" exclude("log4j", "log4j") force(),
-  "com.ircclouds.irc" % "irc-api" % "1.0-0014"
+  "com.ircclouds.irc" % "irc-api" % "1.0-0014",
+  "org.apache.kafka" % "kafka-clients" % "0.9.0.0",
+  "ch.qos.logback" % "logback-core" % "1.1.2",
+  "ch.qos.logback" % "logback-classic" % "1.1.2"
 )
+
+lazy val root = project.in(file(".")).enablePlugins(JavaAppPackaging)
 
 //
 // Test stuff
@@ -65,7 +70,5 @@ libraryDependencies ++= Seq(
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.5" % "test",
   "junit" % "junit" % "4.11" % "test",
-  "com.novocode" % "junit-interface" % "0.11-RC1" % "test",
-  "ch.qos.logback" % "logback-core" % "1.1.2" % "test",
-  "ch.qos.logback" % "logback-classic" % "1.1.2" % "test"
+  "com.novocode" % "junit-interface" % "0.11-RC1" % "test"
 )

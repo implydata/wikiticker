@@ -21,25 +21,28 @@ import com.metamx.common.scala.Jackson
 import com.metamx.common.scala.Logging
 import com.metamx.common.scala.lifecycle._
 import com.twitter.app.Flags
-import java.io.File
-import java.io.FileOutputStream
-import java.io.PrintStream
 
 object ConsoleTicker extends Logging
 {
   def main(args: Array[String]) {
     val flags = new Flags("wikiticker-console")
-    val out = flags("out", "-", "write to file")
+    val out = flags("out", "console", "output destination [console, file, kafka]")
+    val fileName = flags("filename", "wikiticker.out", "file name for output")
+    val brokers = flags("brokers", "localhost:9092", "Kafka [bootstrap.servers]")
+    val topic = flags("topic", "wikipedia", "Kafka topic")
+
     flags.parseArgs(args)
 
-    val outStream = out() match {
-      case "-" => System.out
-      case fileName => new PrintStream(new FileOutputStream(new File(fileName)))
+    val writer = out() match {
+      case "console" => new ConsoleWriter
+      case "file" => new FileWriter(fileName())
+      case "kafka" => new KafkaWriter(brokers(), topic())
+      case _ => throw new IllegalArgumentException("-out must be one of [console, file, kafka]")
     }
 
     val listener = new MessageListener {
       override def process(message: Message) = {
-        outStream.println(Jackson.generate(message.toMap))
+        writer.write(Jackson.generate(message.toMap))
       }
     }
 
@@ -112,6 +115,7 @@ object ConsoleTicker extends Logging
       ticker.start()
     } onStop {
       ticker.stop()
+      writer.shutdown()
     }
 
     try {
