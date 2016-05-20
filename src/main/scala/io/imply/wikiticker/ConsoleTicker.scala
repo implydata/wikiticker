@@ -24,6 +24,8 @@ import com.twitter.app.Flags
 
 object ConsoleTicker extends Logging
 {
+  private var messageCounter = 0
+
   def main(args: Array[String]) {
     val flags = new Flags("wikiticker-console")
     val out = flags("out", "console", "output destination [console, file, kafka]")
@@ -43,6 +45,11 @@ object ConsoleTicker extends Logging
     val listener = new MessageListener {
       override def process(message: Message) = {
         writer.write(Jackson.generate(message.toMap))
+
+        messageCounter += 1
+        if (messageCounter % 100 == 0) {
+          log.info(s"Processed [${messageCounter}] messages")
+        }
       }
     }
 
