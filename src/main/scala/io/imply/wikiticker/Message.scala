@@ -64,7 +64,9 @@ case class Message(
     "isMinor" -> isMinor,
     "isNew" -> isNew,
     "isUnpatrolled" -> isUnpatrolled,
-    "namespace" -> namespace
+    "namespace" -> namespace,
+    "commentLength" -> comment.length,
+    "deltaBucket" -> math.floor(delta / 100.0) * 100
   )
 }
 
