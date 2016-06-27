@@ -16,14 +16,21 @@
 
 package io.imply.wikiticker
 
+import com.google.common.io.Files
 import com.metamx.common.lifecycle.Lifecycle
 import com.metamx.common.scala.Jackson
 import com.metamx.common.scala.Logging
 import com.metamx.common.scala.lifecycle._
+import com.metamx.common.scala.untyped.Dict
 import com.twitter.app.Flags
+import io.imply.hostbook.GeoLookup
+import java.io.File
 
 object ConsoleTicker extends Logging
 {
+  private val geoDb     = GeoLookup.fromFreeDownloadableCityDatabase(new File(Files.createTempDir(), "geodb"))
+  private val ipPattern = "(\\d+.\\d+.\\d+.\\d+)".r
+
   private var messageCounter = 0
 
   def main(args: Array[String]) {
@@ -44,7 +51,7 @@ object ConsoleTicker extends Logging
 
     val listener = new MessageListener {
       override def process(message: Message) = {
-        writer.write(Jackson.generate(message.toMap))
+        writer.write(Jackson.generate(withGeo(message.toMap)))
 
         messageCounter += 1
         if (messageCounter % 100 == 0) {
@@ -134,5 +141,23 @@ object ConsoleTicker extends Logging
         log.error(e, "Failed to start up, stopping and exiting.")
         lifecycle.stop()
     }
+  }
+
+  def withGeo(map: Dict): Dict = {
+    map ++ (map("user").asInstanceOf[String] match {
+      case ipPattern(ip) => {
+        val result = geoDb.lookup(ip)
+        Dict(
+          "isAnonymous" -> true,
+          "cityName" -> result.cityName.orNull,
+          "countryIsoCode" -> result.countryIsoCode.orNull,
+          "countryName" -> result.countryName.orNull,
+          "metroCode" -> result.metroCode.orNull,
+          "regionIsoCode" -> result.regionIsoCode.orNull,
+          "regionName" -> result.regionName.orNull
+        )
+      }
+      case _ => Dict("isAnonymous" -> false)
+    })
   }
 }
