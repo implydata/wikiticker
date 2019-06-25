@@ -56,7 +56,7 @@ ReleaseKeys.publishArtifactsAction := PgpKeys.publishSigned.value
 libraryDependencies ++= Seq(
   "com.metamx" %% "scala-util" % "1.11.3" exclude("log4j", "log4j") force(),
   "com.ircclouds.irc" % "irc-api" % "1.0-0014",
-  "org.apache.kafka" % "kafka-clients" % "0.9.0.0",
+  "org.apache.kafka" % "kafka-clients" % "2.2.0",
   "ch.qos.logback" % "logback-core" % "1.1.2",
   "ch.qos.logback" % "logback-classic" % "1.1.2",
   "io.imply" %% "hostbook" % "0.1"
