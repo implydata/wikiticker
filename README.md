@@ -5,6 +5,8 @@
 This is a Scala library that reads the recent change feeds from
 [Wikimedia's IRC channels](https://meta.wikimedia.org/wiki/IRC/Channels#Raw_feeds).
 
+This service uses GeoLite2 data created by MaxMind, available from <a href="http://www.maxmind.com">maxmind.com</a>.
+
 Usage:
 
 ```scala
