@@ -58,8 +58,7 @@ libraryDependencies ++= Seq(
   "com.ircclouds.irc" % "irc-api" % "1.0-0014",
   "org.apache.kafka" % "kafka-clients" % "2.2.0",
   "ch.qos.logback" % "logback-core" % "1.1.2",
-  "ch.qos.logback" % "logback-classic" % "1.1.2",
-  "io.imply" %% "hostbook" % "0.2"
+  "ch.qos.logback" % "logback-classic" % "1.1.2"
 )
 
 lazy val root = project.in(file(".")).enablePlugins(JavaAppPackaging)
